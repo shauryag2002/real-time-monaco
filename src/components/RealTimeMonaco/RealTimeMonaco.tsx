@@ -193,15 +193,11 @@ export const RealTimeMonaco: FunctionComponent<MonacoEditorProps & { name: strin
   return (
     <MonacoEditor
       theme="vs-dark"
-      onMount={editor => {
+      onMount={(editor, monaco) => {
         setMonacoEditor(editor);
+        props.onMount?.(editor, monaco);
       }}
       className='monaco-editor'
-      options={{
-        wordWrap: 'on',
-        smoothScrolling: true,
-        glyphMargin: true,
-      }}
       {...(props || {})}
     />
   );
