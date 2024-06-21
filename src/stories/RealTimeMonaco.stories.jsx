@@ -15,8 +15,19 @@ const Template = (args) =>
 
     <RealTimeMonaco  {...args} />
 )
-
+const generateRandomName = () => {
+    return Math.random().toString(36).substring(7);
+}
+const generateColor = () => {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
 export const Default = Template.bind({
 
 });
-Default.args = {};
+Default.args = {
+    height: "500px",
+    width: "500px",
+    name: generateRandomName(),
+    color: generateColor(),
+    roomId: "12",
+};

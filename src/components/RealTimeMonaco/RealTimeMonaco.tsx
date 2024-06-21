@@ -9,8 +9,9 @@ import { FunctionComponent } from 'react';
 import { EditorProps as MonacoEditorProps } from '@monaco-editor/react';
 import { Awareness } from 'y-protocols/awareness';
 import * as monaco from 'monaco-editor';
-import './styles.css'
+import '../../styles.css'
 import React from 'react';
+import { YText } from 'yjs/dist/src/internals';
 interface CursorsType {
   lineNumber: number,
   column: number
@@ -48,6 +49,7 @@ export const RealTimeMonaco: FunctionComponent<MonacoEditorProps & { name: strin
   const [colors, setColors] = useState<string[]>([])
   let decorations: string[] = []
   const [usersName, setUsersName] = useState<string[]>([])
+  const [type2, setType2] = useState<YText | undefined>()
   const { name, color, collaborateId } = { name: props.name, color: props.color, collaborateId: props.roomId };
   useEffect(() => {
     if (!isTrue || !name) return;
@@ -153,6 +155,7 @@ export const RealTimeMonaco: FunctionComponent<MonacoEditorProps & { name: strin
     const collaborateParam = collaborateId;
     const provider: WebsocketProvider = new WebsocketProvider('wss://demos.yjs.dev/ws', collaborateParam, doc);
     const type = doc.getText('monaco');
+    setType2(type)
     const awareness = provider.awareness
     setAwareness(awareness);
     awareness.on('change', () => {
@@ -190,15 +193,26 @@ export const RealTimeMonaco: FunctionComponent<MonacoEditorProps & { name: strin
     }
     handleEditorDidMount(monacoEditor)
   }, [monacoEditor, collaborateId, name])
+  const { onMount, value, ...rest } = props;
+  useEffect(() => {
+    if (monacoEditor && value && type2) {
+      // type2.delete(0, type2.length);
+      // type2.insert(0, value);
+      monacoEditor.setValue("")
+      monacoEditor.setValue(value)
+    }
+  }, [value, monacoEditor, type2])
   return (
     <MonacoEditor
       theme="vs-dark"
       onMount={(editor, monaco) => {
         setMonacoEditor(editor);
-        props.onMount?.(editor, monaco);
+        if (onMount) {
+          onMount(editor, monaco);
+        }
       }}
       className='monaco-editor'
-      {...(props || {})}
+      {...rest}
     />
   );
 };

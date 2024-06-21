@@ -1,6 +1,6 @@
 {
   "name": "real-time-monaco",
-  "version": "1.1.7",
+  "version": "1.1.14",
   "description": "Real Time document editing in monaco editor with Users cursors",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
