@@ -2,7 +2,7 @@
 ![Real-time Monaco Editor](./src/real-time-monaco.gif)
 ## Demo
 
-Check out the demo app: [real-time-monaco Demo](https://real-time-monaco.code-yard.tech/)
+Check out the demo app: [real-time-monaco Demo](https://real-time-monaco.vercel.app/)
 ---
 A real-time collaborative code editor component using Monaco Editor and Yjs for state synchronization.
 
